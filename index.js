@@ -4,7 +4,7 @@ const server = express();
 server.use(express.json());
 const PORT = 3000;
 
-let = produtos = [
+let produtos = [
   { id: 0, produto: 'Teclado', preco: 120 },
   { id: 1, produto: 'Mouse', preco: 100 },
   { id: 2, produto: 'Mouse Gamer', preco: 160 },
