@@ -1,8 +1,11 @@
 const express = require('express');
+const { PrismaClient } = require('@prisma/client');
 
 const server = express();
 server.use(express.json());
 const PORT = 3000;
+
+const prisma = new PrismaClient();
 
 let produtos = [
   { id: 0, produto: 'Teclado', preco: 120 },
@@ -10,8 +13,15 @@ let produtos = [
   { id: 2, produto: 'Mouse Gamer', preco: 160 },
 ];
 
-server.get('/produtos', (req, res) => {
-  return res.status(200).json(produtos);
+server.get('/produtos', async (req, res) => {
+  try {
+    const produtos = await prisma.produto.findMany();
+    return res.json(produtos);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Erro ao buscar produtos',
+    });
+  }
 });
 
 server.get('/produtos/:id', (req, res) => {
